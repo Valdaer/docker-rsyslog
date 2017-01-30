@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  nginx:
+    build: ./nginx-syslog
+    ports:
+      - "80:80"
+    depends_on:
+      - "rsyslog-agent"
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://localhost:514"
+
+  rsyslog-agent:
+    build: ./rsyslog-agent
+    ports:
+      - "514:514"
+    networks:
+      - logging
+
+  rsyslog-server:
+    build: ./rsyslog-server
+    networks:
+      - logging
+      
+networks:
+  logging:
