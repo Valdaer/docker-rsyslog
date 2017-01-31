@@ -3,15 +3,17 @@ Simple rsyslog configuration for docker as a solution for [this](https://quip.co
 
 # local docker usage
 build and run by a docker-compose:
-`docker-compose build`
-`docker-compose up`
+```
+docker-compose build
+docker-compose up
+```
 
 # docker swarm mode usage
 setup example for already configured swarm mode on a couple of docker machines:
 
-*build the images from dockerfiles and push them to a registry that is accessible from docker swarm nodes
-*export REGISTRY environment variable with access location of the registry
-*execute these commands on the swarm manager node:
+* build the images from dockerfiles and push them to a registry that is accessible from docker swarm nodes
+* export REGISTRY environment variable with access location of the registry
+* execute these commands on the swarm manager node:
 ```
 docker network create --driver overlay logging
 docker service create --network logging --name rsyslog-server $REGISTRY/rsyslog-server
@@ -29,6 +31,6 @@ in the service/container create command.
 
 # caveats
 
-That kind of rsyslog config would be easier/better to setup on Kubernetes because of simpler network model, concept of pods, services and daemon sets.
+That kind of rsyslog config would be easier/better to setup on Kubernetes because of simpler network model, concept of pods, services, daemon sets and persistent volume claims.
 
 I have a little bit experience with fluentd(when I was using prometheus in one project) and a bit more with logstash. Moreover that rsyslog config could be linked to such more modern logging systems like fluentd or logstash.
